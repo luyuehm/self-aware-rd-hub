@@ -79,3 +79,19 @@ Recommended reading order:
 - committed example config: `config/tidb.example.yaml`
 - local machine config: `config/tidb.local.yaml`
 - code defaults to local first, then example
+
+
+## Demo
+
+Run the minimal end-to-end demo pipeline with one command:
+
+```bash
+python3 cli.py demo-run --sql-file sql/sample_query.sql --base-dir . --generate-report
+```
+
+This will generate:
+
+- `reports/demo_before.json`
+- `reports/demo_recommendation.json`
+- `reports/demo_validation.json`
+- `shadow_fix/sql_validation_report_*.md` (when `--generate-report` is enabled)

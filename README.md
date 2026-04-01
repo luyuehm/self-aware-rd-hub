@@ -26,3 +26,9 @@ Recommended reading order:
 - `docs/CANVAS_INDEX.md`
 - `docs/DEMO_WALKTHROUGH.md`
 - `docs/ARCHITECTURE.md`
+
+## Config
+
+- committed example config: `config/tidb.example.yaml`
+- local machine config: `config/tidb.local.yaml`
+- code defaults to local first, then example

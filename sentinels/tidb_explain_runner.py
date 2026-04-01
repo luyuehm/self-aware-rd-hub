@@ -7,11 +7,28 @@ import pymysql
 import yaml
 
 
-CONFIG_PATH = Path(__file__).resolve().parents[1] / "config" / "tidb.yaml"
+CONFIG_DIR = Path(__file__).resolve().parents[1] / "config"
+DEFAULT_CONFIG_CANDIDATES = [
+    CONFIG_DIR / "tidb.local.yaml",
+    CONFIG_DIR / "tidb.example.yaml",
+]
+
+
+def resolve_tidb_config_path(path: str | None = None) -> Path:
+    if path:
+        return Path(path)
+
+    for candidate in DEFAULT_CONFIG_CANDIDATES:
+        if candidate.exists():
+            return candidate
+
+    raise FileNotFoundError(
+        "No TiDB config found. Expected one of: config/tidb.local.yaml or config/tidb.example.yaml"
+    )
 
 
 def load_tidb_config(path: str | None = None) -> Dict[str, Any]:
-    cfg_path = Path(path) if path else CONFIG_PATH
+    cfg_path = resolve_tidb_config_path(path)
     return yaml.safe_load(cfg_path.read_text(encoding="utf-8"))
 
 

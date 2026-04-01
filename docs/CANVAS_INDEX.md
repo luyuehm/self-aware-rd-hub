@@ -102,7 +102,7 @@ projects/self-aware-rd-hub/
 - `validators/tidb_index_validator.py`
 - `reporters/validation_report_generator.py`
 - `config/validation.yaml`
-- `config/tidb.yaml`
+- `config/tidb.local.yaml` (or `config/tidb.example.yaml`)
 
 ### 对应产物
 - `reports/before.json`
@@ -178,7 +178,7 @@ projects/self-aware-rd-hub/
 - `validators/validation_gate.py`
 - `validators/tidb_index_validator.py`
 - `config/validation.yaml`
-- `config/tidb.yaml`
+- `config/tidb.local.yaml` (or `config/tidb.example.yaml`)
 
 ### 对应 JSON / 报告
 - `reports/before.json`

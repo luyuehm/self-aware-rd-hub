@@ -39,7 +39,7 @@ SQL
 # 1. 配置 TiDB 连接
 
 ## 文件
-- [ ] `config/tidb.yaml`
+- [ ] `config/tidb.local.yaml` (or `config/tidb.example.yaml`)
 
 ## TODO
 - [ ] 写入：
@@ -64,7 +64,7 @@ SQL
 - [ ] `sentinels/tidb_explain_runner.py`
 
 ## TODO
-- [ ] 读取 `config/tidb.yaml`
+- [ ] 读取 `config/tidb.local.yaml` (or `config/tidb.example.yaml`)
 - [ ] 建立 PyMySQL 连接
 - [ ] 执行：
   ```sql

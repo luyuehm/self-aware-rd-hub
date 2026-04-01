@@ -1,6 +1,19 @@
+# Python
 .venv/
 __pycache__/
 *.pyc
+.pytest_cache/
+.mypy_cache/
+.coverage
+
+# macOS
 .DS_Store
+
+# Env / local config
+.env
+.env.*
+config/*.local.yaml
+
+# Runtime artifacts
 reports/*.json
 shadow_fix/*.md

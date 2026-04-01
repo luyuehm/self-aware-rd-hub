@@ -42,7 +42,8 @@ It is best used for:
 ## Quick start
 
 ```bash
-cd /Users/macbook/vscode/self-aware-rd-hub
+git clone git@github.com:luyuehm/self-aware-rd-hub.git
+cd self-aware-rd-hub
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt

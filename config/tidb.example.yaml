@@ -1,7 +1,8 @@
-# Phase 1: 测试 / 开发库配置（不要填生产库）
+# Example config for local test / dev TiDB only.
+# Never use production credentials here.
 host: 127.0.0.1
 port: 4000
-user: root
+user: your_user
 password: ""
-database: test
+database: your_test_db
 connect_timeout: 5

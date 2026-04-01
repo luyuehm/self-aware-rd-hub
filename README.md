@@ -1,6 +1,46 @@
 # Self-Aware R&D Hub
 
-A prototype workflow for TiDB SQL optimization validation.
+An engineering prototype for TiDB SQL optimization validation.
+
+> SQL feature extraction → EXPLAIN analysis → candidate index recommendation → existing-index inspection → validation gate → test-DB validation → report generation
+
+## What this project does
+
+Self-Aware R&D Hub turns a single SQL tuning idea into a repeatable validation workflow.
+It is designed for:
+
+- explain-driven SQL analysis
+- conservative index recommendation
+- gated validation in a test database
+- structured report output for review
+
+## Current scope
+
+This project is currently a **prototype**, not a production auto-indexing system.
+It is best used for:
+
+- validating optimization ideas
+- refining decision rules
+- evolving a future workflow
+
+## Key modules
+
+- `parsers/` — SQL feature extraction
+- `analyzers/` — explain signal analysis
+- `inspectors/` — existing-index inspection
+- `recommenders/` — candidate index recommendation
+- `validators/` — gate + test-DB validation
+- `reporters/` — review-friendly output
+- `docs/` — architecture, canvas index, walkthrough
+
+## Quick start
+
+```bash
+cd /Users/macbook/vscode/self-aware-rd-hub
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
 
 ## Architecture docs
 

@@ -1,0 +1,532 @@
+{
+  "nodes": [
+    {
+      "id": "title",
+      "type": "text",
+      "x": -200,
+      "y": -900,
+      "width": 700,
+      "height": 120,
+      "text": "# Self-Aware R&D Hub\n自感知研发中枢 / Shadow DevOps + Shadow Fix + Memory Loop",
+      "color": "6"
+    },
+    {
+      "id": "user",
+      "type": "text",
+      "x": -1400,
+      "y": -320,
+      "width": 280,
+      "height": 120,
+      "text": "## 用户 / IDE / Git\n- 保存 SQL / DAO / Repo 文件\n- 手动触发诊断\n- 审核 shadow_fix / report",
+      "color": "1"
+    },
+    {
+      "id": "watcher",
+      "type": "text",
+      "x": -980,
+      "y": -340,
+      "width": 320,
+      "height": 160,
+      "text": "## File Watcher\n- 监听 .sql / dao / repo 变更\n- debounce\n- 提取 SQL 候选\n- 命中规则才触发",
+      "color": "4"
+    },
+    {
+      "id": "orchestrator",
+      "type": "text",
+      "x": -520,
+      "y": -360,
+      "width": 360,
+      "height": 200,
+      "text": "## R&D Hub Orchestrator\n- 识别问题类型\n- 先 infra 再 sql\n- 统一调度 sentinel / validator / report\n- 高风险动作升级人工确认",
+      "color": "4"
+    },
+    {
+      "id": "infra",
+      "type": "text",
+      "x": -40,
+      "y": -640,
+      "width": 330,
+      "height": 180,
+      "text": "## Infra Sentinel\n- docker / health / logs\n- TiDB / Redis / app 容器检查\n- 端口冲突 / OOM / env missing / dependency not ready",
+      "color": "4"
+    },
+    {
+      "id": "sql",
+      "type": "text",
+      "x": -40,
+      "y": -360,
+      "width": 330,
+      "height": 200,
+      "text": "## SQL Performance Guardian\n- TiDB EXPLAIN\n- full_table_scan\n- high_row_scan\n- index_not_used\n- 生成结构化分析结果",
+      "color": "4"
+    },
+    {
+      "id": "memory_recall",
+      "type": "text",
+      "x": -40,
+      "y": -60,
+      "width": 330,
+      "height": 170,
+      "text": "## Memory Recall\n- LanceDB / MEMORY 召回历史案例\n- 同表案例\n- 相似 where/order by 结构\n- 成功/失败经验排序加权",
+      "color": "2"
+    },
+    {
+      "id": "recommend",
+      "type": "text",
+      "x": 420,
+      "y": -360,
+      "width": 350,
+      "height": 200,
+      "text": "## Index Recommender\n- 从 where / join / order by 抽列\n- 生成保守候选索引\n- 只产出 candidate DDL\n- 不直接动主工程 / 生产",
+      "color": "4"
+    },
+    {
+      "id": "validate",
+      "type": "text",
+      "x": 860,
+      "y": -360,
+      "width": 360,
+      "height": 220,
+      "text": "## Test DB Validator\n- before EXPLAIN\n- 测试库临时 CREATE INDEX\n- after EXPLAIN\n- compare rows / operators\n- auto rollback",
+      "color": "4"
+    },
+    {
+      "id": "report",
+      "type": "text",
+      "x": 1320,
+      "y": -360,
+      "width": 340,
+      "height": 210,
+      "text": "## Validation Report Generator\n- before / recommendation / validation\n- 生成 markdown 报告\n- 输出 ratio / verdict / rollback\n- 写入 shadow_fix/",
+      "color": "6"
+    },
+    {
+      "id": "shadow",
+      "type": "text",
+      "x": 1780,
+      "y": -360,
+      "width": 320,
+      "height": 180,
+      "text": "## shadow_fix / reports\n- sql_validation_report.md\n- fix_*.md\n- recommendation.json\n- validation.json\n- patch / override 候选",
+      "color": "6"
+    },
+    {
+      "id": "writeback",
+      "type": "text",
+      "x": 1320,
+      "y": 20,
+      "width": 360,
+      "height": 220,
+      "text": "## Memory Writeback\n- 只存高价值案例\n- improved / failed / confirmed rules\n- case memory + pattern memory\n- 存 fact / decision\n- scope: project:*",
+      "color": "2"
+    },
+    {
+      "id": "lancedb",
+      "type": "text",
+      "x": 1780,
+      "y": 20,
+      "width": 320,
+      "height": 180,
+      "text": "## LanceDB / Long-term Memory\n- SQL 优化案例\n- 规律与决策\n- 成功收益倍数\n- 失败反例\n- 下次优先 recall",
+      "color": "2"
+    },
+    {
+      "id": "lane1",
+      "type": "text",
+      "x": -1500,
+      "y": -760,
+      "width": 3600,
+      "height": 60,
+      "text": "### 主执行链：保存文件 → 诊断 → 候选索引 → 测试验证 → 报告 → 记忆回灌",
+      "color": "3"
+    },
+    {
+      "id": "risk",
+      "type": "text",
+      "x": 420,
+      "y": 320,
+      "width": 840,
+      "height": 280,
+      "text": "## 风险分级\n### L1 自动执行\n- explain / logs / collect evidence / generate shadow_fix\n\n### L2 受控执行\n- 测试库临时建索引\n- 本地容器重启\n- 生成 override / env.fixed\n\n### L3 必须人工确认\n- migration\n- 删除数据 / 卷\n- 改生产 deployment / secrets\n- 正式 DDL 推进生产",
+      "color": "5"
+    },
+    {
+      "id": "principle",
+      "type": "text",
+      "x": 1320,
+      "y": 320,
+      "width": 780,
+      "height": 230,
+      "text": "## 一句话原则\n- 先感知，后诊断\n- 先 shadow_fix，再主工程\n- 记忆用于缩短下次验证路径，不替代当前验证\n- 超出风险阈值立即叫人",
+      "color": "5"
+    },
+    {
+      "id": "flow_sql",
+      "type": "text",
+      "x": -980,
+      "y": 700,
+      "width": 980,
+      "height": 300,
+      "text": "## SQL 闭环\n1. 保存 SQL / DAO\n2. watcher 提取 SQL\n3. tidb-explain 生成 before.json\n4. recommend-index 生成 candidate_ddl\n5. validate-index 在测试库验证\n6. generate-report 产出 markdown\n7. memory writer 回灌案例 / 规律",
+      "color": "6"
+    },
+    {
+      "id": "flow_notify",
+      "type": "text",
+      "x": 120,
+      "y": 700,
+      "width": 920,
+      "height": 300,
+      "text": "## 提醒策略\n- quiet_when_ok = true\n- 只有 full_table_scan / high_row_scan / explain_failed / validation_failed 才提醒\n- 正常情况下静默，只留 reports / shadow_fix\n- 由 OpenClaw 决定是否汇总发消息",
+      "color": "6"
+    },
+    {
+      "id": "flow_memory",
+      "type": "text",
+      "x": 1180,
+      "y": 700,
+      "width": 920,
+      "height": 300,
+      "text": "## 记忆策略\n- 存结论，不存流水账\n- 成功案例：ratio >= 3 且 verdict=improved\n- 失败案例：建议无收益也要存\n- 规律：人工确认后升格为 decision\n- recall 先找同表案例，再找相似结构规律",
+      "color": "6"
+    },
+    {
+      "id": "lane_phase2",
+      "type": "text",
+      "text": "### Phase 2 实装层：feature / signals / coverage / gate / JSON artifacts",
+      "x": -340,
+      "y": -190,
+      "width": 1720,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "parser",
+      "type": "text",
+      "text": "## SQL Feature Extractor\n- normalize SQL\n- primary_table\n- where_cols\n- order_cols\n- limit\n- 统一供 recommender / report / memory 复用",
+      "x": 300,
+      "y": -640,
+      "width": 320,
+      "height": 190,
+      "color": "2"
+    },
+    {
+      "id": "signals",
+      "type": "text",
+      "text": "## Explain Signal Analyzer\n- full_table_scan\n- high_row_scan\n- index_not_used\n- sort_risk\n- explain_failed\n- 输出结构化 signals",
+      "x": 300,
+      "y": -120,
+      "width": 320,
+      "height": 190,
+      "color": "2"
+    },
+    {
+      "id": "inspector",
+      "type": "text",
+      "text": "## Existing Index Inspector\n- information_schema.statistics\n- inspect-existing-indexes\n- exact_exists\n- prefix_covered\n- not_covered",
+      "x": 760,
+      "y": -640,
+      "width": 320,
+      "height": 190,
+      "color": "5"
+    },
+    {
+      "id": "gate",
+      "type": "text",
+      "text": "## Validation Gate\n- require_test_db\n- allow_create_index\n- deny/allow list\n- max_index_columns\n- skip_if_exact_exists\n- action: validate / skip / deny",
+      "x": 760,
+      "y": -120,
+      "width": 320,
+      "height": 210,
+      "color": "5"
+    },
+    {
+      "id": "artifacts",
+      "type": "text",
+      "text": "## Phase 2 JSON Artifacts\n- before.json\n  - sql_features\n  - signals\n  - raw_explain\n- recommendation.json\n- validation.json\n  - gate / coverage / existing_indexes",
+      "x": 1760,
+      "y": -660,
+      "width": 360,
+      "height": 240,
+      "color": "6"
+    },
+    {
+      "id": "cli_phase2",
+      "type": "text",
+      "text": "## CLI Phase 2\n- tidb-explain\n- recommend-index\n- inspect-indexes\n- validate-index\n- generate-report\n- 输出 version: phase2.v1",
+      "x": -980,
+      "y": -590,
+      "width": 320,
+      "height": 200,
+      "color": "2"
+    },
+    {
+      "id": "phase2_note",
+      "type": "text",
+      "text": "## 当前状态\n- Phase 2 核心模块已落地\n- 离线验收已通过\n- 真实 TiDB 端到端待验证\n- 现在图已经从“概念链”进入“工程原型链”",
+      "x": 1760,
+      "y": -100,
+      "width": 360,
+      "height": 210,
+      "color": "4"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "fromNode": "user",
+      "toNode": "watcher",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "保存 / 触发"
+    },
+    {
+      "id": "e2",
+      "fromNode": "watcher",
+      "toNode": "orchestrator",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "命中规则"
+    },
+    {
+      "id": "e3",
+      "fromNode": "orchestrator",
+      "toNode": "infra",
+      "fromSide": "top",
+      "toSide": "left",
+      "label": "环境问题"
+    },
+    {
+      "id": "e4",
+      "fromNode": "orchestrator",
+      "toNode": "sql",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "SQL 分析"
+    },
+    {
+      "id": "e5",
+      "fromNode": "orchestrator",
+      "toNode": "memory_recall",
+      "fromSide": "bottom",
+      "toSide": "left",
+      "label": "先 recall 历史经验"
+    },
+    {
+      "id": "e6",
+      "fromNode": "sql",
+      "toNode": "recommend",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "analysis"
+    },
+    {
+      "id": "e7",
+      "fromNode": "memory_recall",
+      "toNode": "recommend",
+      "fromSide": "right",
+      "toSide": "bottom",
+      "label": "历史案例加权"
+    },
+    {
+      "id": "e8",
+      "fromNode": "recommend",
+      "toNode": "validate",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "candidate_ddl"
+    },
+    {
+      "id": "e9",
+      "fromNode": "validate",
+      "toNode": "report",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "compare + verdict"
+    },
+    {
+      "id": "e10",
+      "fromNode": "report",
+      "toNode": "shadow",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "markdown / json"
+    },
+    {
+      "id": "e11",
+      "fromNode": "report",
+      "toNode": "writeback",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "值得沉淀时"
+    },
+    {
+      "id": "e12",
+      "fromNode": "writeback",
+      "toNode": "lancedb",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "memory_store"
+    },
+    {
+      "id": "e13",
+      "fromNode": "lancedb",
+      "toNode": "memory_recall",
+      "fromSide": "left",
+      "toSide": "right",
+      "label": "下次 recall"
+    },
+    {
+      "id": "e14",
+      "fromNode": "risk",
+      "toNode": "validate",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "label": "受 L1/L2/L3 约束"
+    },
+    {
+      "id": "e15",
+      "fromNode": "principle",
+      "toNode": "shadow",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "label": "先 shadow_fix"
+    },
+    {
+      "id": "e16",
+      "fromNode": "infra",
+      "toNode": "report",
+      "fromSide": "right",
+      "toSide": "top",
+      "label": "环境诊断也可出报告"
+    },
+    {
+      "id": "e17",
+      "fromNode": "watcher",
+      "toNode": "cli_phase2",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "CLI 入口 / 子命令"
+    },
+    {
+      "id": "e18",
+      "fromNode": "cli_phase2",
+      "toNode": "orchestrator",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "统一入口"
+    },
+    {
+      "id": "e19",
+      "fromNode": "sql",
+      "toNode": "parser",
+      "fromSide": "top",
+      "toSide": "left",
+      "label": "extract features"
+    },
+    {
+      "id": "e20",
+      "fromNode": "sql",
+      "toNode": "signals",
+      "fromSide": "bottom",
+      "toSide": "left",
+      "label": "raw explain → signals"
+    },
+    {
+      "id": "e21",
+      "fromNode": "parser",
+      "toNode": "recommend",
+      "fromSide": "right",
+      "toSide": "top",
+      "label": "where/order features"
+    },
+    {
+      "id": "e22",
+      "fromNode": "signals",
+      "toNode": "recommend",
+      "fromSide": "right",
+      "toSide": "bottom",
+      "label": "warning signals"
+    },
+    {
+      "id": "e23",
+      "fromNode": "recommend",
+      "toNode": "inspector",
+      "fromSide": "top",
+      "toSide": "left",
+      "label": "candidate cols"
+    },
+    {
+      "id": "e24",
+      "fromNode": "inspector",
+      "toNode": "gate",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "coverage"
+    },
+    {
+      "id": "e25",
+      "fromNode": "gate",
+      "toNode": "validate",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "allowed 才继续"
+    },
+    {
+      "id": "e26",
+      "fromNode": "parser",
+      "toNode": "artifacts",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "before.json fields"
+    },
+    {
+      "id": "e27",
+      "fromNode": "signals",
+      "toNode": "artifacts",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "signals block"
+    },
+    {
+      "id": "e28",
+      "fromNode": "inspector",
+      "toNode": "artifacts",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "existing_indexes"
+    },
+    {
+      "id": "e29",
+      "fromNode": "gate",
+      "toNode": "artifacts",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "gate / coverage"
+    },
+    {
+      "id": "e30",
+      "fromNode": "artifacts",
+      "toNode": "shadow",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "json evidence"
+    },
+    {
+      "id": "e31",
+      "fromNode": "phase2_note",
+      "toNode": "artifacts",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "label": "当前产物口径"
+    },
+    {
+      "id": "e32",
+      "fromNode": "memory_recall",
+      "toNode": "parser",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "label": "未来 recall query 复用特征"
+    }
+  ]
+}

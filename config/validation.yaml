@@ -1,0 +1,17 @@
+require_test_db: true
+allow_create_index: true
+auto_rollback: true
+
+max_index_columns: 3
+
+skip_if_exact_index_exists: true
+skip_if_prefix_covered: false
+
+table_allowlist: []
+table_denylist: []
+
+risk_policy:
+  single_column: low
+  two_columns: medium
+  three_columns: medium
+  more_than_three: high

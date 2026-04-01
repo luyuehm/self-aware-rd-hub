@@ -1,0 +1,310 @@
+{
+  "nodes": [
+    {
+      "id": "title",
+      "type": "text",
+      "x": -120,
+      "y": -900,
+      "width": 860,
+      "height": 120,
+      "color": "6",
+      "text": "# Memory Recall / Writeback Loop\n自感知研发系统的案例记忆闭环 / Recall + Writeback + Policy"
+    },
+    {
+      "id": "lane_core",
+      "type": "text",
+      "x": -1460,
+      "y": -740,
+      "width": 3560,
+      "height": 60,
+      "color": "3",
+      "text": "### 主闭环：query formation → recall → recommendation/validation assist → writeback → next recall"
+    },
+    {
+      "id": "trigger",
+      "type": "text",
+      "x": -1420,
+      "y": -260,
+      "width": 320,
+      "height": 170,
+      "color": "1",
+      "text": "## Trigger / 触发\n- 保存 SQL / DAO / Repo\n- 手动诊断\n- validate 完成\n- report 生成\n- 只在需要时触发 recall/writeback"
+    },
+    {
+      "id": "features",
+      "type": "text",
+      "x": -980,
+      "y": -260,
+      "width": 340,
+      "height": 190,
+      "color": "2",
+      "text": "## Recall Query Features\n- primary_table\n- where_cols\n- order_cols\n- join_cols\n- limit\n- verdict / risk / scene\n- 统一由 sql_features 提供"
+    },
+    {
+      "id": "query",
+      "type": "text",
+      "x": -520,
+      "y": -260,
+      "width": 340,
+      "height": 190,
+      "color": "4",
+      "text": "## Recall Query Builder\n- 同表案例 query\n- 相似结构 query\n- warning signal query\n- failed pattern query\n- 把结构化特征转成 recall 条件"
+    },
+    {
+      "id": "recall",
+      "type": "text",
+      "x": -60,
+      "y": -260,
+      "width": 360,
+      "height": 220,
+      "color": "2",
+      "text": "## Memory Recall Engine\n- case memory recall\n- pattern memory recall\n- 召回 success / failed / neutral 案例\n- 返回 evidence，不直接替代当前验证"
+    },
+    {
+      "id": "weight",
+      "type": "text",
+      "x": 420,
+      "y": -260,
+      "width": 360,
+      "height": 220,
+      "color": "4",
+      "text": "## Weight / Assist Layer\n- 给 recommender 加权\n- 给 gate / validator 提示风险\n- 给 report 增加历史上下文\n- 记忆只辅助，不直接下结论"
+    },
+    {
+      "id": "runtime",
+      "type": "text",
+      "x": 900,
+      "y": -260,
+      "width": 380,
+      "height": 240,
+      "color": "4",
+      "text": "## Runtime Decision\n- 当前 SQL explain / validate 结果优先\n- recall 只能作为 evidence\n- 当前验证若与历史冲突，以当前测试结果为准\n- 防止“记忆替代现实”"
+    },
+    {
+      "id": "report",
+      "type": "text",
+      "x": 1400,
+      "y": -260,
+      "width": 360,
+      "height": 210,
+      "color": "6",
+      "text": "## Report / Explainability\n- 本次结论\n- 历史相似案例\n- 是否采用历史经验\n- 为什么写回 / 为什么不写回"
+    },
+    {
+      "id": "writeback_gate",
+      "type": "text",
+      "x": 900,
+      "y": 120,
+      "width": 380,
+      "height": 240,
+      "color": "5",
+      "text": "## Writeback Policy Gate\n- worth_writeback?\n- quiet_when_ok\n- improved / failed / confirmed_rule\n- 过滤低价值、重复、噪声案例"
+    },
+    {
+      "id": "case_memory",
+      "type": "text",
+      "x": 1400,
+      "y": 120,
+      "width": 360,
+      "height": 220,
+      "color": "2",
+      "text": "## Case Memory\n- 单次 SQL 验证案例\n- before / recommendation / validation\n- verdict / ddl / rollback\n- 适合复盘与相似 case recall"
+    },
+    {
+      "id": "pattern_memory",
+      "type": "text",
+      "x": 1400,
+      "y": 400,
+      "width": 360,
+      "height": 220,
+      "color": "2",
+      "text": "## Pattern Memory\n- 同类结构的稳定经验\n- 例如：低基数列单列索引价值低\n- 例如：where + order 组合常见有效列序\n- 适合长期加权"
+    },
+    {
+      "id": "store",
+      "type": "text",
+      "x": 1880,
+      "y": 260,
+      "width": 320,
+      "height": 220,
+      "color": "2",
+      "text": "## LanceDB / Long-term Store\n- case memory\n- pattern memory\n- metadata / tags / timestamps\n- 下次 recall 的来源"
+    },
+    {
+      "id": "artifacts",
+      "type": "text",
+      "x": -80,
+      "y": 480,
+      "width": 500,
+      "height": 290,
+      "color": "6",
+      "text": "## 产物映射\n- before.json\n- recommendation.json\n- validation.json\n- sql_validation_report.md\n- memory writeback record\n\n这些产物决定：\n1. 是否值得写回\n2. 写回 case 还是 pattern\n3. 下次 recall 用哪些字段"
+    },
+    {
+      "id": "boundaries",
+      "type": "text",
+      "x": 520,
+      "y": 480,
+      "width": 720,
+      "height": 290,
+      "color": "5",
+      "text": "## 边界规则\n- 记忆只做加权，不替代当前验证\n- 历史成功不等于这次一定成功\n- 历史失败不等于这次一定失败\n- recall 不应绕过 validation gate\n- writeback 必须经过 worth_writeback 过滤"
+    },
+    {
+      "id": "future",
+      "type": "text",
+      "x": 1360,
+      "y": 700,
+      "width": 520,
+      "height": 240,
+      "color": "4",
+      "text": "## 下一步演进\n- recall scoring\n- pattern consolidation\n- duplicate suppression\n- confidence decay / freshness\n- cross-project memory isolation\n- 更强 explain / runtime 联动"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "fromNode": "trigger",
+      "toNode": "features",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "触发 recall/writeback"
+    },
+    {
+      "id": "e2",
+      "fromNode": "features",
+      "toNode": "query",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "形成 recall query"
+    },
+    {
+      "id": "e3",
+      "fromNode": "query",
+      "toNode": "recall",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "query memory"
+    },
+    {
+      "id": "e4",
+      "fromNode": "recall",
+      "toNode": "weight",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "相似案例 / 模式"
+    },
+    {
+      "id": "e5",
+      "fromNode": "weight",
+      "toNode": "runtime",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "辅助当前决策"
+    },
+    {
+      "id": "e6",
+      "fromNode": "runtime",
+      "toNode": "report",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "可解释结论"
+    },
+    {
+      "id": "e7",
+      "fromNode": "runtime",
+      "toNode": "writeback_gate",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "结果是否值得写回"
+    },
+    {
+      "id": "e8",
+      "fromNode": "writeback_gate",
+      "toNode": "case_memory",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "写 case"
+    },
+    {
+      "id": "e9",
+      "fromNode": "writeback_gate",
+      "toNode": "pattern_memory",
+      "fromSide": "bottom",
+      "toSide": "left",
+      "label": "沉淀 pattern"
+    },
+    {
+      "id": "e10",
+      "fromNode": "case_memory",
+      "toNode": "store",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "memory_store"
+    },
+    {
+      "id": "e11",
+      "fromNode": "pattern_memory",
+      "toNode": "store",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "memory_store"
+    },
+    {
+      "id": "e12",
+      "fromNode": "store",
+      "toNode": "recall",
+      "fromSide": "left",
+      "toSide": "right",
+      "label": "下次 recall"
+    },
+    {
+      "id": "e13",
+      "fromNode": "artifacts",
+      "toNode": "writeback_gate",
+      "fromSide": "top",
+      "toSide": "left",
+      "label": "产物决定写回价值"
+    },
+    {
+      "id": "e14",
+      "fromNode": "boundaries",
+      "toNode": "runtime",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "label": "现实优先"
+    },
+    {
+      "id": "e15",
+      "fromNode": "boundaries",
+      "toNode": "writeback_gate",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "label": "过滤噪声"
+    },
+    {
+      "id": "e16",
+      "fromNode": "future",
+      "toNode": "store",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "label": "后续增强"
+    },
+    {
+      "id": "e17",
+      "fromNode": "report",
+      "toNode": "artifacts",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "回写审计材料"
+    },
+    {
+      "id": "e18",
+      "fromNode": "features",
+      "toNode": "artifacts",
+      "fromSide": "bottom",
+      "toSide": "left",
+      "label": "recall fields"
+    }
+  ]
+}

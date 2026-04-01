@@ -1,0 +1,492 @@
+{
+  "nodes": [
+    {
+      "id": "title",
+      "type": "text",
+      "x": -120,
+      "y": -920,
+      "width": 860,
+      "height": 120,
+      "text": "# TiDB SQL Optimization Validation Loop\n从保存 SQL 到候选索引验证与记忆回灌",
+      "color": "6"
+    },
+    {
+      "id": "input",
+      "type": "text",
+      "x": -1380,
+      "y": -260,
+      "width": 300,
+      "height": 150,
+      "text": "## 输入\n- SQL 文件\n- DAO / Repository 变更\n- 手工指定一条 SQL\n\n目标：定位慢查询风险",
+      "color": "1"
+    },
+    {
+      "id": "watcher",
+      "type": "text",
+      "x": -980,
+      "y": -260,
+      "width": 320,
+      "height": 170,
+      "text": "## File Watcher / Trigger\n- 命中 .sql / dao / repo\n- debounce\n- 提取 SQL\n- 生成 tmp/current_watched_query.sql",
+      "color": "4"
+    },
+    {
+      "id": "recall",
+      "type": "text",
+      "x": -560,
+      "y": -500,
+      "width": 340,
+      "height": 190,
+      "text": "## Historical Recall\n- 同表案例\n- 相似 where/order by 结构\n- 成功索引模式\n- 失败反例\n\n作用：给候选方案排序加权",
+      "color": "2"
+    },
+    {
+      "id": "before",
+      "type": "text",
+      "x": -560,
+      "y": -220,
+      "width": 340,
+      "height": 190,
+      "text": "## Before EXPLAIN\n- 真实连 TiDB\n- EXPLAIN FORMAT=verbose\n- 输出 before.json\n- 提取 operators / max_est_rows",
+      "color": "4"
+    },
+    {
+      "id": "analysis",
+      "type": "text",
+      "x": -120,
+      "y": -220,
+      "width": 360,
+      "height": 220,
+      "text": "## SQL Performance Analysis\n- full_table_scan\n- high_row_scan\n- index_not_used\n- explain_failed\n\n输出结构化 warnings + plan_summary",
+      "color": "4"
+    },
+    {
+      "id": "recommend",
+      "type": "text",
+      "x": 340,
+      "y": -220,
+      "width": 380,
+      "height": 240,
+      "text": "## Index Recommender\n- 抽取 where / join / order by 列\n- 保守生成 candidate_ddl\n- 优先：等值过滤列在前，排序列在后\n- 历史 recall 命中时可提高置信度",
+      "color": "4"
+    },
+    {
+      "id": "gate",
+      "type": "text",
+      "x": 820,
+      "y": -220,
+      "width": 350,
+      "height": 220,
+      "text": "## Validation Gate\n### 进入验证前必须满足\n- 测试库 / 开发库\n- allow_create_index = true\n- require_test_db = true\n- 候选 DDL 非空\n\n否则：只出建议，不执行",
+      "color": "5"
+    },
+    {
+      "id": "validate",
+      "type": "text",
+      "x": 1260,
+      "y": -220,
+      "width": 380,
+      "height": 250,
+      "text": "## Test DB Validator\n- CREATE INDEX 临时验证\n- after EXPLAIN\n- compare before/after\n- 生成 rollback_sql\n- auto_rollback=true 时自动回滚",
+      "color": "4"
+    },
+    {
+      "id": "compare",
+      "type": "text",
+      "x": 1720,
+      "y": -220,
+      "width": 340,
+      "height": 220,
+      "text": "## Compare Result\n- before_rows / after_rows\n- improved_rows\n- improved_ops\n- ratio\n- verdict: improved / not_clear",
+      "color": "4"
+    },
+    {
+      "id": "report",
+      "type": "text",
+      "x": 1260,
+      "y": 140,
+      "width": 390,
+      "height": 260,
+      "text": "## Validation Report\n- SQL 原文\n- before warnings\n- candidate DDL\n- after operators\n- compare result\n- rollback SQL\n\n写入 shadow_fix/sql_validation_report.md",
+      "color": "6"
+    },
+    {
+      "id": "notify",
+      "type": "text",
+      "x": 1720,
+      "y": 140,
+      "width": 340,
+      "height": 210,
+      "text": "## Notify Policy\n- quiet_when_ok = true\n- 只有明显风险 / 验证失败 / explain_failed 才提醒\n- 正常情况静默，只落档",
+      "color": "6"
+    },
+    {
+      "id": "writeback",
+      "type": "text",
+      "x": 1260,
+      "y": 500,
+      "width": 390,
+      "height": 250,
+      "text": "## Memory Writeback\n### 自动写入条件\n- verdict = improved 且 ratio >= 3\n- 或高价值失败反例\n\n### 存储形式\n- case memory (fact)\n- pattern memory (decision)",
+      "color": "2"
+    },
+    {
+      "id": "memory",
+      "type": "text",
+      "x": 1720,
+      "y": 500,
+      "width": 350,
+      "height": 230,
+      "text": "## LanceDB / Long-term Memory\n- 表名 / where_cols / order_cols\n- candidate_index\n- before_rows / after_rows / ratio\n- improved / failed\n- 下次 recall 先命中历史经验",
+      "color": "2"
+    },
+    {
+      "id": "risk",
+      "type": "text",
+      "x": 340,
+      "y": 500,
+      "width": 700,
+      "height": 280,
+      "text": "## 风险边界\n### L1\n- explain / analysis / report / recall\n\n### L2\n- 测试库临时 CREATE INDEX\n- auto rollback\n\n### L3\n- 正式 DDL\n- 生产 migration\n- 线上 deployment / secrets\n\n原则：验证闭环可以自动，正式推进必须人工确认",
+      "color": "5"
+    },
+    {
+      "id": "outputs",
+      "type": "text",
+      "x": -120,
+      "y": 500,
+      "width": 360,
+      "height": 250,
+      "text": "## 产物\n- reports/before.json\n- reports/recommendation.json\n- reports/validation.json\n- shadow_fix/sql_validation_report.md\n- memory case / pattern",
+      "color": "6"
+    },
+    {
+      "id": "principle",
+      "type": "text",
+      "x": -980,
+      "y": 500,
+      "width": 700,
+      "height": 270,
+      "text": "## 核心原则\n- 记忆用于缩短下一次验证路径，不替代当前验证\n- 先证据，再候选方案\n- 先测试库验证，再考虑正式 DDL\n- 失败案例和成功案例都值得沉淀\n- 不把流水账原样塞进记忆",
+      "color": "5"
+    },
+    {
+      "id": "lane_phase2",
+      "type": "text",
+      "text": "### Phase 2 工程实装：sql_features / signals / existing_indexes / validation config",
+      "x": -620,
+      "y": -760,
+      "width": 2280,
+      "height": 60,
+      "color": "3"
+    },
+    {
+      "id": "parser",
+      "type": "text",
+      "text": "## SQL Feature Extractor\n- normalize SQL\n- primary_table\n- where_cols\n- order_cols\n- limit\n- 供 recommendation / report / recall 复用",
+      "x": -120,
+      "y": -520,
+      "width": 340,
+      "height": 190,
+      "color": "2"
+    },
+    {
+      "id": "signals",
+      "type": "text",
+      "text": "## Explain Signal Analyzer\n- full_table_scan\n- high_row_scan\n- index_not_used\n- sort_risk\n- explain_failed\n- raw explain → structured signals",
+      "x": 340,
+      "y": -520,
+      "width": 360,
+      "height": 200,
+      "color": "2"
+    },
+    {
+      "id": "inspector",
+      "type": "text",
+      "text": "## Existing Index Inspector\n- information_schema.statistics\n- inspect-existing-indexes\n- exact_exists\n- prefix_covered\n- not_covered",
+      "x": 820,
+      "y": -540,
+      "width": 350,
+      "height": 190,
+      "color": "5"
+    },
+    {
+      "id": "cfg",
+      "type": "text",
+      "text": "## validation.yaml\n- require_test_db\n- allow_create_index\n- auto_rollback\n- max_index_columns\n- skip_if_exact_index_exists\n- skip_if_prefix_covered",
+      "x": 820,
+      "y": 120,
+      "width": 350,
+      "height": 210,
+      "color": "5"
+    },
+    {
+      "id": "phase2_state",
+      "type": "text",
+      "text": "## 当前 Phase 2 状态\n- 模块已落地\n- 离线验收通过\n- 真实 TiDB E2E 待跑\n- 这张图现在能对应真实目录与 CLI",
+      "x": 1720,
+      "y": -560,
+      "width": 360,
+      "height": 200,
+      "color": "4"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "fromNode": "input",
+      "toNode": "watcher",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "保存 / 触发"
+    },
+    {
+      "id": "e2",
+      "fromNode": "watcher",
+      "toNode": "before",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "提取 SQL"
+    },
+    {
+      "id": "e3",
+      "fromNode": "before",
+      "toNode": "analysis",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "before.json"
+    },
+    {
+      "id": "e4",
+      "fromNode": "analysis",
+      "toNode": "recommend",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "warnings + plan"
+    },
+    {
+      "id": "e5",
+      "fromNode": "recall",
+      "toNode": "recommend",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "历史经验加权"
+    },
+    {
+      "id": "e6",
+      "fromNode": "recommend",
+      "toNode": "gate",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "candidate_ddl"
+    },
+    {
+      "id": "e7",
+      "fromNode": "gate",
+      "toNode": "validate",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "测试库验证"
+    },
+    {
+      "id": "e8",
+      "fromNode": "validate",
+      "toNode": "compare",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "after + compare"
+    },
+    {
+      "id": "e9",
+      "fromNode": "compare",
+      "toNode": "report",
+      "fromSide": "bottom",
+      "toSide": "right",
+      "label": "verdict"
+    },
+    {
+      "id": "e10",
+      "fromNode": "report",
+      "toNode": "notify",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "是否提醒"
+    },
+    {
+      "id": "e11",
+      "fromNode": "report",
+      "toNode": "writeback",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "值得沉淀时"
+    },
+    {
+      "id": "e12",
+      "fromNode": "writeback",
+      "toNode": "memory",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "memory_store"
+    },
+    {
+      "id": "e13",
+      "fromNode": "memory",
+      "toNode": "recall",
+      "fromSide": "left",
+      "toSide": "right",
+      "label": "下次 recall"
+    },
+    {
+      "id": "e14",
+      "fromNode": "risk",
+      "toNode": "gate",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "label": "L1/L2/L3 约束"
+    },
+    {
+      "id": "e15",
+      "fromNode": "principle",
+      "toNode": "outputs",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "沉淀产物"
+    },
+    {
+      "id": "e16",
+      "fromNode": "compare",
+      "toNode": "writeback",
+      "fromSide": "bottom",
+      "toSide": "right",
+      "label": "improved / failed"
+    },
+    {
+      "id": "e17",
+      "fromNode": "analysis",
+      "toNode": "outputs",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "before.json"
+    },
+    {
+      "id": "e18",
+      "fromNode": "recommend",
+      "toNode": "outputs",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "recommendation.json"
+    },
+    {
+      "id": "e19",
+      "fromNode": "validate",
+      "toNode": "outputs",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "validation.json"
+    },
+    {
+      "id": "e20",
+      "fromNode": "before",
+      "toNode": "parser",
+      "fromSide": "top",
+      "toSide": "left",
+      "label": "SQL → features"
+    },
+    {
+      "id": "e21",
+      "fromNode": "before",
+      "toNode": "signals",
+      "fromSide": "top",
+      "toSide": "left",
+      "label": "raw explain"
+    },
+    {
+      "id": "e22",
+      "fromNode": "parser",
+      "toNode": "analysis",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "sql_features"
+    },
+    {
+      "id": "e23",
+      "fromNode": "signals",
+      "toNode": "analysis",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "signals"
+    },
+    {
+      "id": "e24",
+      "fromNode": "parser",
+      "toNode": "recommend",
+      "fromSide": "right",
+      "toSide": "top",
+      "label": "where/order cols"
+    },
+    {
+      "id": "e25",
+      "fromNode": "signals",
+      "toNode": "recommend",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "warning signals"
+    },
+    {
+      "id": "e26",
+      "fromNode": "recommend",
+      "toNode": "inspector",
+      "fromSide": "right",
+      "toSide": "left",
+      "label": "candidate cols"
+    },
+    {
+      "id": "e27",
+      "fromNode": "inspector",
+      "toNode": "gate",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "coverage"
+    },
+    {
+      "id": "e28",
+      "fromNode": "cfg",
+      "toNode": "gate",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "label": "policy config"
+    },
+    {
+      "id": "e29",
+      "fromNode": "inspector",
+      "toNode": "outputs",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "existing_indexes"
+    },
+    {
+      "id": "e30",
+      "fromNode": "cfg",
+      "toNode": "outputs",
+      "fromSide": "left",
+      "toSide": "right",
+      "label": "validation policy"
+    },
+    {
+      "id": "e31",
+      "fromNode": "phase2_state",
+      "toNode": "compare",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "当前实装口径"
+    },
+    {
+      "id": "e32",
+      "fromNode": "parser",
+      "toNode": "recall",
+      "fromSide": "left",
+      "toSide": "right",
+      "label": "未来 recall query 特征"
+    }
+  ]
+}

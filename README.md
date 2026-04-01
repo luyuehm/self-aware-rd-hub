@@ -1,12 +1,17 @@
 # Self-Aware R&D Hub
 
-An engineering prototype for TiDB SQL optimization validation.
+![Python](https://img.shields.io/badge/python-3.10%2B-blue)
+![Status](https://img.shields.io/badge/status-prototype-orange)
+![Database](https://img.shields.io/badge/database-TiDB-00B3A4)
+
+An engineering prototype for explain-driven TiDB SQL optimization validation.
 
 > SQL feature extraction → EXPLAIN analysis → candidate index recommendation → existing-index inspection → validation gate → test-DB validation → report generation
 
 ## What this project does
 
 Self-Aware R&D Hub turns a single SQL tuning idea into a repeatable validation workflow.
+
 It is designed for:
 
 - explain-driven SQL analysis
@@ -17,6 +22,7 @@ It is designed for:
 ## Current scope
 
 This project is currently a **prototype**, not a production auto-indexing system.
+
 It is best used for:
 
 - validating optimization ideas
